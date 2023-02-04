@@ -5,6 +5,20 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStats 
 {
+    public float maxHealth = 0;
+    public float movementSpeed = 0;
+    public float gunSpread = 0;
+    public float projectileSpeed = 0;
+    public float damage = 0;
+    public float damageOverTime = 0;
+    public float timeBetweenShotsMilis = 0;
+    public int bulletCount = 0;
+    public float maxBulletRange = 0;
+    public int bulletBounceCount = 0;
+    // int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis)
+}
+
+/*
     public float maxHealth = 150;
     public float movementSpeed = 150;
     public float gunSpread = 0;
@@ -15,5 +29,4 @@ public class PlayerStats
     public int bulletCount = 1;
     public float maxBulletRange = 25;
     public int bulletBounceCount = 0;
-    // int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis)
-}
+*/

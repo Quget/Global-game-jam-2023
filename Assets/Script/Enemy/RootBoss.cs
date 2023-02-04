@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootEnemy : MonoBehaviour
+//Like enemy but boss
+public class RootBoss : MonoBehaviour
 {
     [SerializeField]
     private float health = 100;
@@ -37,30 +38,29 @@ public class RootEnemy : MonoBehaviour
     private MeshRenderer meshRenderer = null;
 
     [SerializeField]
-    private bool canMove = false;
+    private new Rigidbody2D rigidbody2D = null;
+
+    [SerializeField]
+    private float speed = 4;
 
 
     private Collider2D playerCollider = null;
 
-    private Action<RootEnemy, bool> OnDestroyed = null;
+    private Action<RootBoss, bool> OnDestroyed = null;
 
 
     private bool canCheckDelete = false;
 
-    private void Start()
+    private Transform transformToFollow = null;
+
+    public void SetUp(Collider2D playerCollider, Transform transformToFollow, Action<RootBoss, bool> OnDestroyed)
     {
-        if (canMove)
-        {
-            SetUp(null, null);
-        }
-    }
-    public void SetUp(Collider2D playerCollider, Action<RootEnemy, bool> OnDestroyed)
-    {
+        this.transformToFollow = transformToFollow;
         this.playerCollider = playerCollider;
 
         this.collider2D.enabled = false;
 
-        if(playerCollider != null)
+        if (playerCollider != null)
             Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
 
         StartCoroutine(EnableHitPlayer());
@@ -93,41 +93,21 @@ public class RootEnemy : MonoBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
 
-        if (canMove)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, FindObjectOfType<Player>().transform.position, 4f * Time.deltaTime);
-        }
-        else
-        {
-            if (!meshRenderer.isVisible && skeletonMecanim.gameObject.activeInHierarchy
-                && !spriteRenderer.isVisible && !spriteRenderer.gameObject.activeInHierarchy && canCheckDelete)
-            {
-                OnDestroyed?.Invoke(this, false);
-                Destroy(this.gameObject);
-            }
-        }
-
-
+        Vector3 direction = transform.position - transformToFollow.position;
+        direction = (direction.normalized * speed) * Time.fixedDeltaTime;
+        rigidbody2D.AddForce(-direction * rigidbody2D.drag, ForceMode2D.Impulse);
+        //transform.position = Vector2.MoveTowards(transform.position, transformToFollow.position, speed * Time.fixedDeltaTime);
     }
 
-    private IEnumerator DelayedDestroy(bool player)
+    private IEnumerator DelayedDestroy()
     {
         yield return new WaitForSeconds(1f);
-        OnDestroyed?.Invoke(this, player);
+        OnDestroyed?.Invoke(this, true);
         Destroy(this.gameObject);
 
-    }
-    public void Kill(bool player)
-    {
-        animator.SetTrigger("despawn");
-        this.collider2D.enabled = false;
-        if (playerCollider != null)
-            Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
-        AudioSource.PlayClipAtPoint(spawnOutClip, transform.position);
-        StartCoroutine(DelayedDestroy(player));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -138,22 +118,33 @@ public class RootEnemy : MonoBehaviour
             health -= projectile.Damage;
             if (health <= 0)
             {
-                Kill(true);
+                animator.SetTrigger("despawn");
+                this.collider2D.enabled = false;
+
+                if (playerCollider != null)
+                    Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
+
+                AudioSource.PlayClipAtPoint(spawnOutClip, transform.position);
+                StartCoroutine(DelayedDestroy());
             }
-             
         }
         else
         {
             Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                if (canMove)
-                {
-                    Vector2 force  = collision.contacts[0].normal * 150;
-                    Debug.Log(force);
-                    player.Rigidbody2D.AddForceAtPosition(-force, transform.position,ForceMode2D.Impulse);
-                }
+                Vector2 force = collision.contacts[0].normal * 150;
+                player.Rigidbody2D.AddForceAtPosition(-force, transform.position, ForceMode2D.Impulse);
+
                 player.ReceiveDamage(damage);
+            }
+            else
+            {
+                RootEnemy rootEnemy = collision.gameObject.GetComponent<RootEnemy>();
+                if (rootEnemy != null)
+                {
+                    rootEnemy.Kill(false);
+                }
             }
         }
     }

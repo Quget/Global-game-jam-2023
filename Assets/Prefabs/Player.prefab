@@ -238,12 +238,12 @@ MonoBehaviour:
     maxHealth: 100
     movementSpeed: 250
     gunSpread: 0
-    projectileSpeed: 10
+    projectileSpeed: 5
     damage: 10
     damageOverTime: 0
     timeBetweenShotsMilis: 1000
     bulletCount: 1
-    maxBulletRange: 15
+    maxBulletRange: 10
     bulletBounceCount: 0
   aimTransform: {fileID: 1045100056278161809}
   gunPoint: {fileID: 1045100056957959792}

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,6 +12,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private new Rigidbody2D  rigidbody2D = null;
+    public Rigidbody2D Rigidbody2D => rigidbody2D;
 
     [SerializeField]
     private PlayerStats playerStats;
@@ -194,29 +194,30 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        BonusPickable bonusPickable = collision.gameObject.GetComponent<BonusPickable>();
-        if (bonusPickable != null)
+        PowerUpPickable powerUpPickable = collision.gameObject.GetComponent<PowerUpPickable>();
+        if (powerUpPickable != null)
         {
 
-            ApplyBonus(bonusPickable);
-            Destroy(bonusPickable.gameObject);
+            ApplyBonus(powerUpPickable);
+            Destroy(powerUpPickable.gameObject);
         }
     }
 
-    private void ApplyBonus(BonusPickable bonusPickable)
+    private void ApplyBonus(PowerUpPickable powerUpPickable)
     {
-        AudioSource.PlayClipAtPoint(powerUp, bonusPickable.transform.position);
+        AudioSource.PlayClipAtPoint(powerUp, powerUpPickable.transform.position);
+
         //Do magic bonus shit
-        playerStats.bulletCount += bonusPickable.addBulletCount;
-        playerStats.damage += bonusPickable.addDamage;
-        playerStats.gunSpread += bonusPickable.addSpread;
-        playerStats.timeBetweenShotsMilis -= bonusPickable.reduceTimeBetweenShotsMilis;
-        playerStats.bulletBounceCount += bonusPickable.addBounceCount;
-        currentHealth += bonusPickable.addHealth;
-        playerStats.movementSpeed += bonusPickable.addMovementSpeed;
-        playerStats.projectileSpeed += bonusPickable.addProjectileSpeed;
-        playerStats.damageOverTime += bonusPickable.addDamageOverTime;
-        playerStats.maxBulletRange += bonusPickable.addMaxBulletRange;
+        playerStats.bulletCount += powerUpPickable.PowerUpSetting.PowerUp.bulletCount;
+        playerStats.damage += powerUpPickable.PowerUpSetting.PowerUp.damage;
+        playerStats.gunSpread += powerUpPickable.PowerUpSetting.PowerUp.gunSpread;
+        playerStats.timeBetweenShotsMilis -= powerUpPickable.PowerUpSetting.PowerUp.timeBetweenShotsMilis;
+        playerStats.bulletBounceCount += powerUpPickable.PowerUpSetting.PowerUp.bulletBounceCount;
+        currentHealth += powerUpPickable.PowerUpSetting.PowerUp.maxHealth;
+        playerStats.movementSpeed += powerUpPickable.PowerUpSetting.PowerUp.movementSpeed;
+        playerStats.projectileSpeed += powerUpPickable.PowerUpSetting.PowerUp.projectileSpeed;
+        playerStats.damageOverTime += powerUpPickable.PowerUpSetting.PowerUp.damageOverTime;
+        playerStats.maxBulletRange += powerUpPickable.PowerUpSetting.PowerUp.maxBulletRange;
 
         if (playerStats.damage < 1)
             playerStats.damage = 1;
