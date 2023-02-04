@@ -18,13 +18,19 @@ public class CameraThatFollowsATransform : MonoBehaviour
 
     private float startZoom = 0f;
 
-    private void Start()
+    public void SetUp()
     {
         startZoom = Camera.main.orthographicSize;
     }
 
-    public void SetOrthosize(float targetZoom)
+    public void SetOrthosize(float targetZoom, bool instant = false)
     {
+        if (instant)
+        {
+            Camera.main.orthographicSize = targetZoom;
+            return;
+        }
+            
         //Camera.main.orthographicSize = targetZoom;
         StartCoroutine(Zoom(targetZoom));
     }

@@ -11,23 +11,33 @@ public class RootEnemy : MonoBehaviour
     private float timeToShootOut = 5;
 
     [SerializeField]
-    private new BoxCollider2D collider2D = null;
+    private new Collider2D collider2D = null;
 
     [SerializeField]
     private float damage = 15;
 
+    [SerializeField]
+    private SpriteRenderer spriteRenderer = null;
 
-    private void Awake()
+    private Collider2D playerCollider = null;
+    public void SetUp(Collider2D playerCollider)
     {
-
-        Physics2D.IgnoreLayerCollision(gameObject.layer, 7, true);
+        this.playerCollider = playerCollider;
+        spriteRenderer.color = Color.clear;
+        Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
         StartCoroutine(EnableHitPlayer());
     }
 
     private IEnumerator EnableHitPlayer()
     {
-        yield return new WaitForSeconds(timeToShootOut);
-        Physics2D.IgnoreLayerCollision(gameObject.layer, 7, false);
+        while (spriteRenderer.color != Color.white)
+        {
+            spriteRenderer.color = Color.Lerp(spriteRenderer.color, Color.white, timeToShootOut * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        spriteRenderer.color = Color.white;
+        //yield return new WaitForSeconds(timeToShootOut);
+        Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,7 +55,6 @@ public class RootEnemy : MonoBehaviour
             if (player != null)
             {
                 player.ReceiveDamage(damage);
-                Debug.Log("Death!");
             }
         }
     }

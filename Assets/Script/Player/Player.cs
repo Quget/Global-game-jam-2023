@@ -22,6 +22,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
 
+    [SerializeField]
+    private new Collider2D collider2D;
+    public Collider2D Collider2D => collider2D;
+
+    public bool CanMove = false;
+
+
     private float currentHealth = 100;
     public float CurrentHealth => currentHealth;
 
@@ -43,6 +50,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!CanMove)
+            return;
+
         Aim();
         FlipCheck();
         CheckInput();
@@ -50,11 +60,16 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if (!CanMove)
+            return;
+
         Movement();
     }
 
     private void CheckInput()
     {
+
         float fireTrigger = Input.GetAxis("FireTrigger");
         if (Input.GetButton("Fire1") || fireTrigger > 0)
         {
@@ -64,7 +79,7 @@ public class Player : MonoBehaviour
             if (fireTrigger > 0)
                 timeBetweenshot *= 1 + (1-fireTrigger);
 
-            weapon.Shoot(-direction,gunPoint.position, playerStats.bulletCount, playerStats.gunSpread, playerStats.projectileSpeed, playerStats.damage, playerStats.damageOverTime, timeBetweenshot,playerStats.maxBulletRange);
+            weapon.Shoot(-direction, gunPoint.position, playerStats.bulletCount, playerStats.gunSpread, playerStats.projectileSpeed, playerStats.damage, playerStats.damageOverTime, timeBetweenshot, playerStats.maxBulletRange, playerStats.bulletBounceCount);
         }
     }
 
@@ -137,13 +152,27 @@ public class Player : MonoBehaviour
         BonusPickable bonusPickable = collision.gameObject.GetComponent<BonusPickable>();
         if (bonusPickable != null)
         {
-            //Do magic bonus shit
 
-            playerStats.bulletCount += bonusPickable.addBulletCount;
-            playerStats.damage += bonusPickable.addDamage;
-            playerStats.gunSpread += bonusPickable.addSpread;
-
+            ApplyBonus(bonusPickable);
             Destroy(bonusPickable.gameObject);
         }
+    }
+
+    private void ApplyBonus(BonusPickable bonusPickable)
+    {
+        //Do magic bonus shit
+        playerStats.bulletCount += bonusPickable.addBulletCount;
+        playerStats.damage += bonusPickable.addDamage;
+        playerStats.gunSpread += bonusPickable.addSpread;
+        playerStats.timeBetweenShotsMilis -= bonusPickable.reduceTimeBetweenShotsMilis;
+        playerStats.bulletBounceCount += bonusPickable.addBounceCount;
+        currentHealth += bonusPickable.addHealth;
+        playerStats.movementSpeed += bonusPickable.addMovementSpeed;
+        playerStats.projectileSpeed += bonusPickable.addProjectileSpeed;
+        playerStats.damageOverTime += bonusPickable.addDamageOverTime;
+        playerStats.maxBulletRange += bonusPickable.addMaxBulletRange;
+
+        if (playerStats.damage < 1)
+            playerStats.damage = 1;
     }
 }

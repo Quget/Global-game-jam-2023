@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class BonusPickable : MonoBehaviour
 {
-    public float addDamage = 25;
-    public float addSpread = 5;
-    public int addBulletCount = 5;
+    public float addDamage = 0;
+    public float addSpread = 0;
+    public int addBulletCount = 0;
+    public float reduceTimeBetweenShotsMilis = 0;
+    public int addBounceCount = 0;
+    public float addHealth = 0;
+    public float addMovementSpeed = 0;
+    public float addProjectileSpeed = 0;
+    public float addDamageOverTime = 0;
+    public float addMaxBulletRange = 0;
+
 }

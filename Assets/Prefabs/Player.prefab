@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1045100055265195813}
   - component: {fileID: 1045100055265195810}
   m_Layer: 7
-  m_Name: Triangle
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 829c5c8d39a963d408497ad03606167e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,15 +108,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045100055269929609}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.87, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.77594745, y: -0.101053715, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1045100055265195813}
   m_Father: {fileID: 1045100055877520427}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1045100055269929607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,19 +233,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 1045100055877520428}
   playerStats:
-    maxHealth: 150
+    maxHealth: 100
     movementSpeed: 250
     gunSpread: 0
-    projectileSpeed: 25
-    damage: 25
+    projectileSpeed: 10
+    damage: 10
     damageOverTime: 0
     timeBetweenShotsMilis: 1000
     bulletCount: 1
-    maxBulletRange: 25
+    maxBulletRange: 15
   aimTransform: {fileID: 1045100056278161809}
   gunPoint: {fileID: 1045100056957959792}
   weapon: {fileID: 1045100055269929607}
   spriteRenderer: {fileID: 1045100056797669069}
+  collider2D: {fileID: 1045100055877520429}
+  CanMove: 0
 --- !u!1 &1045100056278161808
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +375,7 @@ GameObject:
   - component: {fileID: 1045100056957959792}
   - component: {fileID: 1045100056957959793}
   m_Layer: 7
-  m_Name: GameObject
+  m_Name: Crosair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -434,8 +436,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: a53c784d5afdd8b40880c7abfc40c271, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

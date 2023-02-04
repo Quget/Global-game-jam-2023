@@ -14,5 +14,6 @@ public class PlayerStats
     public float timeBetweenShotsMilis = 1000;
     public int bulletCount = 1;
     public float maxBulletRange = 25;
+    public int bulletBounceCount = 0;
     // int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis)
 }
