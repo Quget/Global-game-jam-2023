@@ -1,0 +1,10 @@
+Root.png
+size:512,256
+filter:Linear,Linear
+Pit
+bounds:2,2,282,209
+Root
+bounds:286,24,106,187
+Soil
+bounds:394,54,157,59
+rotate:90
