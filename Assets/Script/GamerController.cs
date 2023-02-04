@@ -30,14 +30,18 @@ public class GamerController : MonoBehaviour
     private void Awake()
     {
         cameraThatFollowsATransform.SetUp();
-        cameraThatFollowsATransform.SetOrthosize(10, true);
+        cameraThatFollowsATransform.SetOrthosize(14, true);
         musicBox.PlayAudio(defaultAudio);
-
+        Application.targetFrameRate = 60;
 
     }
 
     private IEnumerator Start()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            SpawnRootEnemy(4);
+        }
         player.CanMove = false;
         yield return new WaitForSeconds(2);
         cameraThatFollowsATransform.ReturnZoom();
@@ -48,8 +52,10 @@ public class GamerController : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         while (gameObject.activeInHierarchy)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
-            SpawnRootEnemy();
+            yield return new WaitForSeconds(Random.Range(1, 3));
+
+            if(rootEnemies.Count < 10)
+                SpawnRootEnemy(2);
         }
     }
     private void Update()
@@ -57,15 +63,14 @@ public class GamerController : MonoBehaviour
         gui.UpdateHealth(player.HealthPercentage);
     }
 
-    private void SpawnRootEnemy()
+    private void SpawnRootEnemy(int randomSpread)
     {
         RootEnemy rootEnemy = GameObject.Instantiate(rootEnemyPrefab);
         Vector3Int playerCell = grid.WorldToCell(player.transform.position);
 
-        int randomSpread = 2;
         Vector3 enemySpawnPos = grid.GetCellCenterWorld(new Vector3Int(playerCell.x += Random.Range(-randomSpread, randomSpread), playerCell.y += Random.Range(-randomSpread, randomSpread)));
         int tried = 0;
-        while (CanSpawn(enemySpawnPos))
+        while (!CanSpawn(enemySpawnPos))
         {
             enemySpawnPos = grid.GetCellCenterWorld(new Vector3Int(playerCell.x += Random.Range(-randomSpread, randomSpread), playerCell.y += Random.Range(-randomSpread, randomSpread)));
             tried++;
@@ -81,7 +86,11 @@ public class GamerController : MonoBehaviour
 
         enemySpawnPos.z = 0;
         rootEnemy.transform.position = enemySpawnPos;
-        rootEnemy.SetUp(player.Collider2D);
+        rootEnemy.SetUp(player.Collider2D,(thisEnemy)=> 
+        {
+            Debug.Log("Remove me");
+            rootEnemies.Remove(rootEnemy);
+        });
         rootEnemies.Add(rootEnemy);
     }
 
@@ -90,8 +99,6 @@ public class GamerController : MonoBehaviour
         float distance = 1000;
         for (int i = 0; i < rootEnemies.Count; i++)
         {
-            if (rootEnemies[i] == null)
-                continue;
             distance = Mathf.Abs(Vector3.Distance(enemySpawnPos, rootEnemies[i].transform.position));
             if (distance < 1.28f)
                 return false;

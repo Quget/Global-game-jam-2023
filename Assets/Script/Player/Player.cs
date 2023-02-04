@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
     private new Collider2D collider2D;
     public Collider2D Collider2D => collider2D;
 
+    [SerializeField]
+    private AudioClip playerHurt = null;
+
+    [SerializeField]
+    private AudioClip powerUp = null;
+
     public bool CanMove = false;
 
 
@@ -125,6 +131,7 @@ public class Player : MonoBehaviour
 
         currentHealth -= damage;
 
+        AudioSource.PlayClipAtPoint(playerHurt, transform.position);
         if (currentHealth <= 0)
         {
             Destroy(this.gameObject);
@@ -160,6 +167,7 @@ public class Player : MonoBehaviour
 
     private void ApplyBonus(BonusPickable bonusPickable)
     {
+        AudioSource.PlayClipAtPoint(powerUp, bonusPickable.transform.position);
         //Do magic bonus shit
         playerStats.bulletCount += bonusPickable.addBulletCount;
         playerStats.damage += bonusPickable.addDamage;

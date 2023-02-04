@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 3355457137141035296}
-  bulletSound: {fileID: 8300000, guid: d40198c31eedd4a44a9d14e55e211f13, type: 3}
+  bulletSound: {fileID: 8300000, guid: e75fa219fd85e414183a3a32c1cca305, type: 3}
 --- !u!50 &3355457137141035296
 Rigidbody2D:
   serializedVersion: 4

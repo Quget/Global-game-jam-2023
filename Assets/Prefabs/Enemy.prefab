@@ -57,6 +57,8 @@ MonoBehaviour:
   animator: {fileID: 4648770054267066745}
   skeletonMecanim: {fileID: 4648770054267066746}
   spawnInClip: {fileID: 8300000, guid: f331c2ce96b1aae468e82660d3f6958d, type: 3}
+  spawnOutClip: {fileID: 8300000, guid: 1196d9912c2c7a84c877b974915d2d7d, type: 3}
+  meshRenderer: {fileID: 4648770054267066744}
 --- !u!60 &1761745791575926794
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -464,6 +466,11 @@ PrefabInstance:
 --- !u!4 &4648770054267066726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 28629019714609025, guid: a96f0c779a7749a43b0306753e0481c9, type: 3}
+  m_PrefabInstance: {fileID: 4676436580197762791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4648770054267066744 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 28629019714609055, guid: a96f0c779a7749a43b0306753e0481c9, type: 3}
   m_PrefabInstance: {fileID: 4676436580197762791}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &4648770054267066745 stripped

@@ -242,11 +242,14 @@ MonoBehaviour:
     timeBetweenShotsMilis: 1000
     bulletCount: 1
     maxBulletRange: 15
+    bulletBounceCount: 0
   aimTransform: {fileID: 1045100056278161809}
   gunPoint: {fileID: 1045100056957959792}
   weapon: {fileID: 1045100055269929607}
   spriteRenderer: {fileID: 1045100056797669069}
   collider2D: {fileID: 1045100055877520429}
+  playerHurt: {fileID: 8300000, guid: 50f39115d5668454eb2809b214ffc13e, type: 3}
+  powerUp: {fileID: 8300000, guid: a1e6846e19ac0dc44944ba0e09503235, type: 3}
   CanMove: 0
 --- !u!1 &1045100056278161808
 GameObject:

@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,9 +30,16 @@ public class RootEnemy : MonoBehaviour
     [SerializeField]
     private AudioClip spawnInClip = null;
 
+    [SerializeField]
+    private AudioClip spawnOutClip = null;
+
+    [SerializeField]
+    private MeshRenderer meshRenderer = null;
 
     private Collider2D playerCollider = null;
-    public void SetUp(Collider2D playerCollider)
+
+    private Action<RootEnemy> OnDestroyed = null;
+    public void SetUp(Collider2D playerCollider, Action<RootEnemy> OnDestroyed)
     {
         this.playerCollider = playerCollider;
 
@@ -39,6 +47,7 @@ public class RootEnemy : MonoBehaviour
         Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
         StartCoroutine(EnableHitPlayer());
         skeletonMecanim.gameObject.SetActive(false);
+        this.OnDestroyed = OnDestroyed;
     }
 
     private IEnumerator EnableHitPlayer()
@@ -61,6 +70,18 @@ public class RootEnemy : MonoBehaviour
         Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
     }
 
+    private void OnDestroy()
+    {
+        OnDestroyed?.Invoke(this);
+    }
+    private void FixedUpdate()
+    {
+        if (!meshRenderer.isVisible && skeletonMecanim.gameObject.activeInHierarchy)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Projectile projectile = collision.gameObject.GetComponent<Projectile>();
@@ -72,6 +93,7 @@ public class RootEnemy : MonoBehaviour
                 animator.SetTrigger("despawn");
                 this.collider2D.enabled = false;
                 Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
+                AudioSource.PlayClipAtPoint(spawnOutClip, transform.position);
                 Destroy(this.gameObject, 1f);
             }
              
