@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
             return;
 
         currentHealth -= damage;
-
+        ScreenShake.Instance.ShakeScreen();
         AudioSource.PlayClipAtPoint(playerHurt, transform.position);
         if (currentHealth <= 0)
         {

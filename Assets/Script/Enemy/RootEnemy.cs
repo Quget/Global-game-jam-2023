@@ -136,6 +136,8 @@ public class RootEnemy : MonoBehaviour
         if (projectile != null)
         {
             health -= projectile.Damage;
+            ScreenShake.Instance.ShakeScreen();
+
             if (health <= 0)
             {
                 Kill(true);

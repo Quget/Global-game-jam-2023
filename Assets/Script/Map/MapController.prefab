@@ -64,6 +64,15 @@ MonoBehaviour:
   - {fileID: 9169661837125566946}
   - {fileID: 8287776418197004265}
   - {fileID: 390853137634617871}
+  cloudyMovementPrefab: {fileID: 4551444033629770387, guid: b5673282b76dfb646a9c321195cff9fe, type: 3}
+  cloudSprites:
+  - {fileID: 21300000, guid: 3d4ee78e2828aa34cb6ca48638e18ada, type: 3}
+  - {fileID: 21300000, guid: d25bbbb27bb6e3f4e9c622e86ea15dc4, type: 3}
+  - {fileID: 21300000, guid: 99f012b4ed9680743aa012277c9ad3ef, type: 3}
+  - {fileID: 21300000, guid: 5c5d5c234a98afb4fb997b2d81a58b16, type: 3}
+  - {fileID: 21300000, guid: 132e0534f5cca9f4d9178b98155823b6, type: 3}
+  - {fileID: 21300000, guid: d0ec16299b3fcbe48aee93297bc07922, type: 3}
+  maxClouds: 20
 --- !u!1 &8735974813256461851
 GameObject:
   m_ObjectHideFlags: 0

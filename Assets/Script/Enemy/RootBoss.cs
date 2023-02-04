@@ -41,7 +41,7 @@ public class RootBoss : MonoBehaviour
     private new Rigidbody2D rigidbody2D = null;
 
     [SerializeField]
-    private float speed = 4;
+    public float speed = 4;
 
 
     private Collider2D playerCollider = null;
@@ -115,6 +115,7 @@ public class RootBoss : MonoBehaviour
         Projectile projectile = collision.gameObject.GetComponent<Projectile>();
         if (projectile != null)
         {
+            ScreenShake.Instance.ShakeScreen();
             health -= projectile.Damage;
             if (health <= 0)
             {
@@ -133,7 +134,7 @@ public class RootBoss : MonoBehaviour
             Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                Vector2 force = collision.contacts[0].normal * 150;
+                Vector2 force = collision.contacts[0].normal * 100;
                 player.Rigidbody2D.AddForceAtPosition(-force, transform.position, ForceMode2D.Impulse);
 
                 player.ReceiveDamage(damage);

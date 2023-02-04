@@ -8,6 +8,17 @@ public class MapController : MonoBehaviour
     [SerializeField]
     private GameObject[] map = null;
 
+    [SerializeField]
+    private CloudyMovement cloudyMovementPrefab = null;
+
+    [SerializeField]
+    private Sprite[] cloudSprites = null;
+
+    [SerializeField]
+    private int maxClouds = 10;
+
+    private List<CloudyMovement> cloudyMovements = new List<CloudyMovement>();
+
     private Transform transformToFollow = null;
     public void SetUp(Transform transformToFollow)
     {
@@ -23,26 +34,45 @@ public class MapController : MonoBehaviour
         {
             if (transformToFollow.position.x > map[i].transform.position.x + 75)
             {
-                Debug.Log("Move x plus");
                 map[i].transform.position = new Vector3(map[i].transform.position.x + 150, map[i].transform.position.y, 0);
             }
 
             if (transformToFollow.position.x < map[i].transform.position.x - 75)
             {
-                Debug.Log("Move x min");
                 map[i].transform.position = new Vector3(map[i].transform.position.x - 150, map[i].transform.position.y, 0);
             }
 
             if (transformToFollow.position.y > map[i].transform.position.y + 75)
             {
-                Debug.Log("Move y plus");
                 map[i].transform.position = new Vector3(map[i].transform.position.x , map[i].transform.position.y + 150, 0);
             }
             if (transformToFollow.position.y < map[i].transform.position.y - 75)
             {
-                Debug.Log("Move y min");
                 map[i].transform.position = new Vector3(map[i].transform.position.x , map[i].transform.position.y - 150, 0);
             }
         }
+
+        if (cloudyMovements.Count < maxClouds)
+        {
+            CreateCloud();
+        }
+    }
+
+    private void CreateCloud()
+    {
+        CloudyMovement cloudyMovement = GameController.Instantiate(cloudyMovementPrefab);
+        cloudyMovement.SetUp(cloudSprites[Random.Range(0, cloudSprites.Length)], (thisCloudyMovement) =>
+        {
+            Destroy(thisCloudyMovement.gameObject);
+            cloudyMovements.Remove(thisCloudyMovement);
+        });
+
+        //Vector3 cloudPosition = new Vector3(transformToFollow.x )
+        float radius = Random.Range(40f, 60f);
+        Vector2 cloudPosition = Random.insideUnitCircle * radius + (Vector2)transformToFollow.position;
+        cloudyMovement.transform.position = cloudPosition;
+        cloudyMovements.Add(cloudyMovement);
+
+        
     }
 }

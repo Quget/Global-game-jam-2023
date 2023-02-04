@@ -55,6 +55,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private RootBoss rootBoss = null;
 
+    [SerializeField]
+    private float bossSpeedIncreasePerTick = 1;
+
     private void Awake()
     {
         cameraThatFollowsATransform.SetUp();
@@ -76,9 +79,18 @@ public class GameController : MonoBehaviour
             CreateRandomPowerUp(powerUpPosition);
         }
 
+        float radius = 75;
+        rootBoss.transform.position = Random.insideUnitCircle * radius + (Vector2)player.transform.position;
+        Camera.main.transform.position = new Vector3(rootBoss.transform.position.x, rootBoss.transform.position.y, Camera.main.transform.position.z);
+
         rootBoss.SetUp(player.Collider2D, player.transform, (thisRootBoss, killed) => 
-        { 
-        
+        {
+            StopAllCoroutines();
+            player.CanMove = false;
+            for (int i = 0; i < rootEnemies.Count; i++)
+            {
+                rootEnemies[i].Kill(true);
+            }
         });
 
         for (int i = 0; i < 2; i++)
@@ -130,6 +142,8 @@ public class GameController : MonoBehaviour
             changeToDropOnKill -= changeToDropReductionPerTick;
             if (changeToDropOnKill < 5)
                 changeToDropOnKill = 5;
+
+            rootBoss.speed += bossSpeedIncreasePerTick;
         }
         
     }
