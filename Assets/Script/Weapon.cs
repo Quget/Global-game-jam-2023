@@ -7,34 +7,37 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private Projectile projectile;
 
-    [SerializeField]
+    //[SerializeField]
     private float timeBetweenShotsMilis = 1;
 
     private bool canShoot = true;
 
-    public void Shoot(Vector3 direction, Vector3 positionToSpawn)
+    public void Shoot(Vector3 direction, Vector3 positionToSpawn, int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis)
     {
         if (canShoot)
         {
             canShoot = false;
-            SingleShot(direction, positionToSpawn);
-            SpreadShot(direction, positionToSpawn,5);
+            this.timeBetweenShotsMilis = timeBetweenShotsMilis;
+            SpreadShot(direction, positionToSpawn, count, spread,speed,damage,damageOverTimer);
             StartCoroutine(ShootTimer());
         }
     }
 
-    private void SingleShot(Vector3 direction, Vector3 positionToSpawn)
+    private void SingleShot(Vector3 direction, Vector3 positionToSpawn, float speed, float damage, float damageOverTimer)
     {
         Projectile shotProjectile = GameObject.Instantiate(projectile);
         shotProjectile.Shoot(direction, positionToSpawn);
     }
 
-    private void SpreadShot(Vector3 direction, Vector3 positionToSpawn, int count)
+    //ToDo
+    private void SpreadShot(Vector3 direction, Vector3 positionToSpawn, int count, float spread,float speed, float damage, float damageOverTimer)
     {
-        //direction = direction * (1f / count);
-        for (int i = 1; i < count + 1; i++)
+        spread = spread * 0.5f;
+        for (int i = 0; i < count; i++)
         {
-            SingleShot(direction * ((float)i / (float)count), positionToSpawn);
+            Quaternion angle =  Quaternion.Euler(0, 0, Random.Range(-spread, spread));
+            Vector3 newDirection = angle * direction;
+            SingleShot(newDirection, positionToSpawn,speed,damage,damageOverTimer);
         }
     }
 
