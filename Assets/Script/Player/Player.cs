@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private new Rigidbody2D  rigidbody2D = null;
 
     [SerializeField]
-    private float movementSpeed = 25;
+    private PlayerStats playerStats;
 
     [SerializeField]
     private Transform aimTransform = null;
@@ -18,6 +18,28 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Weapon weapon;
+
+    [SerializeField]
+    private SpriteRenderer spriteRenderer = null;
+
+    private float currentHealth = 100;
+    public float CurrentHealth => currentHealth;
+
+    public float HealthPercentage
+    {
+        get
+        {
+            float onePercent = playerStats.maxHealth / 100;
+            return CurrentHealth / onePercent;
+        }
+    }
+    private Coroutine flickerCoroutine = null;
+
+
+    private void Awake()
+    {
+        currentHealth = playerStats.maxHealth;
+    }
 
     private void Update()
     {
@@ -38,11 +60,11 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = transform.position - gunPoint.position;
             //Apply bonus here
-            float timeBetweenshot = 250;
+            float timeBetweenshot = playerStats.timeBetweenShotsMilis;
             if (fireTrigger > 0)
                 timeBetweenshot *= 1 + (1-fireTrigger);
 
-            weapon.Shoot(-direction,gunPoint.position,1,0, 25, 5,0.5f, timeBetweenshot);
+            weapon.Shoot(-direction,gunPoint.position, playerStats.bulletCount, playerStats.gunSpread, playerStats.projectileSpeed, playerStats.damage, playerStats.damageOverTime, timeBetweenshot,playerStats.maxBulletRange);
         }
     }
 
@@ -76,9 +98,52 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        input = (input * movementSpeed) * Time.fixedDeltaTime;
+        input = (input * playerStats.movementSpeed) * Time.fixedDeltaTime;
         //physics way
         rigidbody2D.AddForce(input * rigidbody2D.drag);
         //rigidbody2D.transform.Translate(input);
+    }
+    public void ReceiveDamage(float damage)
+    {
+        if (flickerCoroutine != null)
+            return;
+
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            flickerCoroutine = StartCoroutine(Flicker());
+        }
+    }
+
+    private IEnumerator Flicker()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            spriteRenderer.color = Color.clear;
+            yield return new WaitForSeconds(0.15f);
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.15f);
+        }
+        flickerCoroutine = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        BonusPickable bonusPickable = collision.gameObject.GetComponent<BonusPickable>();
+        if (bonusPickable != null)
+        {
+            //Do magic bonus shit
+
+            playerStats.bulletCount += bonusPickable.addBulletCount;
+            playerStats.damage += bonusPickable.addDamage;
+            playerStats.gunSpread += bonusPickable.addSpread;
+
+            Destroy(bonusPickable.gameObject);
+        }
     }
 }
