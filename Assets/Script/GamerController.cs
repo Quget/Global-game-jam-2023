@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GamerController : MonoBehaviour
 {
@@ -40,7 +41,8 @@ public class GamerController : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            SpawnRootEnemy(4);
+            SpawnRootEnemy(6);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
         player.CanMove = false;
         yield return new WaitForSeconds(2);
@@ -52,15 +54,19 @@ public class GamerController : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         while (gameObject.activeInHierarchy)
         {
-            yield return new WaitForSeconds(Random.Range(1, 3));
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
 
-            if(rootEnemies.Count < 10)
+            if(rootEnemies.Count < 15)
                 SpawnRootEnemy(2);
         }
     }
     private void Update()
     {
         gui.UpdateHealth(player.HealthPercentage);
+        if (Input.GetButtonDown("Submit"))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void SpawnRootEnemy(int randomSpread)

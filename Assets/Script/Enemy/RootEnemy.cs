@@ -39,12 +39,18 @@ public class RootEnemy : MonoBehaviour
     private Collider2D playerCollider = null;
 
     private Action<RootEnemy> OnDestroyed = null;
+
+
+    private bool canCheckDelete = false;
     public void SetUp(Collider2D playerCollider, Action<RootEnemy> OnDestroyed)
     {
         this.playerCollider = playerCollider;
 
         this.collider2D.enabled = false;
-        Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
+
+        if(playerCollider != null)
+            Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
+
         StartCoroutine(EnableHitPlayer());
         skeletonMecanim.gameObject.SetActive(false);
         this.OnDestroyed = OnDestroyed;
@@ -67,16 +73,22 @@ public class RootEnemy : MonoBehaviour
 
         this.collider2D.enabled = true;
         //yield return new WaitForSeconds(timeToShootOut);
-        Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
+        if (playerCollider != null)
+            Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
+
+        yield return new WaitForSeconds(1);
+        canCheckDelete = true;
     }
 
     private void OnDestroy()
     {
         OnDestroyed?.Invoke(this);
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
-        if (!meshRenderer.isVisible && skeletonMecanim.gameObject.activeInHierarchy)
+        if (!meshRenderer.isVisible && skeletonMecanim.gameObject.activeInHierarchy 
+            && !spriteRenderer.isVisible && !spriteRenderer.gameObject.activeInHierarchy && canCheckDelete)
         {
             Destroy(this.gameObject);
         }

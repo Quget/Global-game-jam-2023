@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField]
+    private Sprite frontSprite = null;
+
+    [SerializeField]
+    private Sprite backSprite = null;
+
     [SerializeField]
     private new Rigidbody2D  rigidbody2D = null;
 
@@ -91,10 +98,41 @@ public class Player : MonoBehaviour
 
     private void FlipCheck()
     {
-        Vector3 thisScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        thisScreenPoint = Input.mousePosition - thisScreenPoint;
-        int flipScale = thisScreenPoint.x > 0 ? 1 : -1;
-        transform.localScale = new Vector3(flipScale, 1, 1);
+
+        Vector2 input = new Vector2(Input.GetAxis("HorizontalRight"), Input.GetAxis("VerticalRight"));
+        Vector3 thisScreenPoint = input;
+        if (input == Vector2.zero)
+        {
+            thisScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
+            thisScreenPoint = Input.mousePosition - thisScreenPoint;
+            
+            if (thisScreenPoint.y < 0)
+            {
+                spriteRenderer.sprite = frontSprite;
+            }
+            else
+            {
+                spriteRenderer.sprite = backSprite;
+            }
+            int flipScale = thisScreenPoint.x > 0 ? 1 : -1;
+            spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+            
+        }
+        else
+        {
+
+            if (thisScreenPoint.x > 0)
+            {
+                spriteRenderer.sprite = frontSprite;
+            }
+            else
+            {
+                spriteRenderer.sprite = backSprite;
+            }
+            int flipScale = thisScreenPoint.y > 0 ? 1 : -1;
+            spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+        }
+
     }
 
     private void Aim()
