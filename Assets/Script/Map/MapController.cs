@@ -68,11 +68,11 @@ public class MapController : MonoBehaviour
         });
 
         //Vector3 cloudPosition = new Vector3(transformToFollow.x )
-        float radius = Random.Range(40f, 60f);
-        Vector2 cloudPosition = Random.insideUnitCircle * radius + (Vector2)transformToFollow.position;
+        float radius = Random.Range(10f, 30f);
+
+
+        Vector2 cloudPosition = Random.insideUnitCircle.normalized * radius + (Vector2)transformToFollow.position;
         cloudyMovement.transform.position = cloudPosition;
         cloudyMovements.Add(cloudyMovement);
-
-        
     }
 }

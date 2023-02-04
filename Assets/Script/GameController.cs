@@ -80,7 +80,7 @@ public class GameController : MonoBehaviour
         }
 
         float radius = 75;
-        rootBoss.transform.position = Random.insideUnitCircle * radius + (Vector2)player.transform.position;
+        rootBoss.transform.position = Random.insideUnitCircle.normalized * radius + (Vector2)player.transform.position;
         Camera.main.transform.position = new Vector3(rootBoss.transform.position.x, rootBoss.transform.position.y, Camera.main.transform.position.z);
 
         rootBoss.SetUp(player.Collider2D, player.transform, (thisRootBoss, killed) => 

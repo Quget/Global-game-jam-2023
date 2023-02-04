@@ -261,7 +261,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50537b32627301d429e579629847c1b9, type: 2}
   - {fileID: 11400000, guid: 69f63bcb517883a4e8ecc036bdfe1036, type: 2}
   powerUpPickablePrefab: {fileID: 5194515471257045783, guid: 53cb8fcf9d175e24b816d39476a705ec, type: 3}
-  changeToDropOnKill: 12.5
+  changeToDropOnKill: 75
   minMaxSpawnTimeRandom: {x: 4, y: 4}
   startSpread: 4
   maxEnemyCount: 4
@@ -948,6 +948,10 @@ PrefabInstance:
     - target: {fileID: 6006826701543653762, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006826701543653763, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}
+      propertyPath: maxClouds
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}
