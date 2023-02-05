@@ -47,10 +47,16 @@ public class GameController : MonoBehaviour
     private int maxEnemyCount = 15;
 
     [SerializeField]
+    private int spawnCountTheSameTime = 1;
+
+    [SerializeField]
     private float difficultyTick = 10f;
 
     [SerializeField]
     private float changeToDropReductionPerTick = 5f;
+
+    [SerializeField]
+    private int changeSpawnCountTheSameTime = 1;
 
     [SerializeField]
     private RootBoss rootBoss = null;
@@ -116,8 +122,11 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minMaxSpawnTimeRandom.x, minMaxSpawnTimeRandom.y));
 
-            if (rootEnemies.Count < maxEnemyCount)
-                SpawnRootEnemy(startSpread);
+            for (int i = 0; i < spawnCountTheSameTime; i++)
+            {
+                if (rootEnemies.Count < maxEnemyCount)
+                    SpawnRootEnemy(startSpread);
+            }
         }
     }
 
@@ -144,6 +153,7 @@ public class GameController : MonoBehaviour
                 changeToDropOnKill = 5;
 
             rootBoss.speed += bossSpeedIncreasePerTick;
+            spawnCountTheSameTime += changeSpawnCountTheSameTime;
         }
         
     }

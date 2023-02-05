@@ -69,14 +69,21 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         transform.rotation = Quaternion.LookRotation(Vector3.forward, rigidbody2D.velocity * 2);
+
+        bounced++;
+        if (bounced > maxBouncyCount)
+            Clear();
+        /*
         penitrated++;
         if (penitrated > maxPenitrationCount)
         {
             rigidbody2D.sharedMaterial.bounciness = 1;
+
             bounced++;
             if (bounced > maxBouncyCount)
                 Clear();
         }
+        */
     }
 
 
