@@ -168,8 +168,8 @@ public class GameController : MonoBehaviour
             }
 
             changeToDropOnKill -= changeToDropReductionPerTick;
-            if (changeToDropOnKill < 5)
-                changeToDropOnKill = 5;
+            //if (changeToDropOnKill < 5)
+                //changeToDropOnKill = 5;
 
             rootBoss.speed += bossSpeedIncreasePerTick;
             spawnCountTheSameTime += changeSpawnCountTheSameTime;
@@ -191,8 +191,6 @@ public class GameController : MonoBehaviour
 
     private Vector3 GetEnemySpawnInGrid()
     {
-
-
         return Vector3.zero;
     }
 

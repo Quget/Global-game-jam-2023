@@ -269,7 +269,7 @@ MonoBehaviour:
   changeToDropReductionPerTick: 5
   changeSpawnCountTheSameTime: 1
   rootBoss: {fileID: 55041651}
-  bossSpeedIncreasePerTick: 5
+  bossSpeedIncreasePerTick: 2
   enemyStartHealth: 30
   enemyHealthIncreasePerTick: 2
 --- !u!1 &73917392
