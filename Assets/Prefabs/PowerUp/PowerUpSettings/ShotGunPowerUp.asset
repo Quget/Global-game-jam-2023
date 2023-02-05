@@ -23,6 +23,6 @@ MonoBehaviour:
     bulletCount: 3
     maxBulletRange: 0
     bulletBounceCount: 0
-  itemSprite: {fileID: 21300000, guid: cd8c75984cec38e49a6bd0c150553fca, type: 3}
-  color: {r: 1, g: 0.4764151, b: 0.4764151, a: 1}
+  itemSprite: {fileID: 21300000, guid: 6e985e245d8f55c40a96ce9a31105cd3, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
   name: Shorty
