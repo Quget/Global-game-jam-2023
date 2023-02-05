@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using UnityEngine;
 
@@ -38,6 +39,12 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioClip powerUp = null;
+
+    [SerializeField]
+    private Animator animator = null;
+
+    [SerializeField]
+    private SkeletonMecanim skeletonMecanim = null;
 
     public bool CanMove = false;
 
@@ -108,14 +115,15 @@ public class Player : MonoBehaviour
             
             if (thisScreenPoint.y < 0)
             {
-                spriteRenderer.sprite = frontSprite;
+                SetFront();
             }
             else
             {
-                spriteRenderer.sprite = backSprite;
+                SetBack();
+
             }
             int flipScale = thisScreenPoint.x > 0 ? 1 : -1;
-            spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+            //spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
             
         }
         else
@@ -123,16 +131,36 @@ public class Player : MonoBehaviour
 
             if (thisScreenPoint.x > 0)
             {
-                spriteRenderer.sprite = frontSprite;
+                SetFront();
             }
             else
             {
-                spriteRenderer.sprite = backSprite;
+                SetBack();
             }
             int flipScale = thisScreenPoint.y > 0 ? 1 : -1;
-            spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+            //spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
         }
 
+    }
+
+    private void SetFront()
+    {
+        if (!animator.GetBool("WalkForward"))
+        {
+            animator.SetTrigger("WalkForward");
+            Debug.Log("Forward!");
+        }
+
+    }
+
+    private void SetBack()
+    {
+        if (!animator.GetBool("WalkBackward"))
+        {
+            animator.SetTrigger("WalkBackward");
+            Debug.Log("Backward!");
+        }
+            
     }
 
     private void Aim()

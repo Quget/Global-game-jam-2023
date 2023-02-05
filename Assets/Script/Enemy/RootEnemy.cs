@@ -44,7 +44,6 @@ public class RootEnemy : MonoBehaviour
 
     private Action<RootEnemy, bool> OnDestroyed = null;
 
-
     private bool canCheckDelete = false;
 
     private void Start()
@@ -54,6 +53,7 @@ public class RootEnemy : MonoBehaviour
             SetUp(null, null);
         }
     }
+
     public void SetUp(Collider2D playerCollider, Action<RootEnemy, bool> OnDestroyed)
     {
         this.playerCollider = playerCollider;
@@ -95,7 +95,6 @@ public class RootEnemy : MonoBehaviour
 
     private void Update()
     {
-
         if (canMove)
         {
             transform.position = Vector2.MoveTowards(transform.position, FindObjectOfType<Player>().transform.position, 4f * Time.deltaTime);
@@ -109,8 +108,6 @@ public class RootEnemy : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-
-
     }
 
     private IEnumerator DelayedDestroy(bool player)
@@ -124,8 +121,10 @@ public class RootEnemy : MonoBehaviour
     {
         animator.SetTrigger("despawn");
         this.collider2D.enabled = false;
+
         if (playerCollider != null)
             Physics2D.IgnoreCollision(this.collider2D, playerCollider, false);
+
         AudioSource.PlayClipAtPoint(spawnOutClip, transform.position);
         StartCoroutine(DelayedDestroy(player));
     }
@@ -142,7 +141,6 @@ public class RootEnemy : MonoBehaviour
             {
                 Kill(true);
             }
-             
         }
         else
         {
