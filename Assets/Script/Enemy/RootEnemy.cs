@@ -39,20 +39,17 @@ public class RootEnemy : MonoBehaviour
     [SerializeField]
     private bool canMove = false;
 
+    [SerializeField]
+    private float timeOffScreenBeforeDying = 10;
+
+    private float destroyTimer = 0;
+
 
     private Collider2D playerCollider = null;
 
     private Action<RootEnemy, bool> OnDestroyed = null;
 
     private bool canCheckDelete = false;
-
-    private void Start()
-    {
-        if (canMove)
-        {
-            SetUp(null, null);
-        }
-    }
 
     public void SetUp(Collider2D playerCollider, Action<RootEnemy, bool> OnDestroyed)
     {
@@ -100,7 +97,7 @@ public class RootEnemy : MonoBehaviour
         canCheckDelete = true;
     }
 
-
+    
     private void Update()
     {
         if (canMove)
@@ -112,8 +109,16 @@ public class RootEnemy : MonoBehaviour
             if (!meshRenderer.isVisible && skeletonMecanim.gameObject.activeInHierarchy
                  && !spawnParticle.gameObject.activeInHierarchy && canCheckDelete)
             {
-                OnDestroyed?.Invoke(this, false);
-                Destroy(this.gameObject);
+                destroyTimer += Time.deltaTime;
+                if (destroyTimer > timeOffScreenBeforeDying)
+                {
+                    OnDestroyed?.Invoke(this, false);
+                    Destroy(this.gameObject);
+                }
+            }
+            else
+            {
+                destroyTimer = 0;
             }
         }
     }

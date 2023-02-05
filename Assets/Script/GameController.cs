@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
     {
         Vector3Int playerCell = grid.WorldToCell(player.transform.position);
         int randomSpread = 4;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 1; i++)
         {
             Vector3 powerUpPosition = grid.GetCellCenterWorld(new Vector3Int(playerCell.x += Random.Range(-randomSpread, randomSpread), playerCell.y += Random.Range(-randomSpread, randomSpread)));
             CreateRandomPowerUp(powerUpPosition);
@@ -155,7 +155,6 @@ public class GameController : MonoBehaviour
             rootBoss.speed += bossSpeedIncreasePerTick;
             spawnCountTheSameTime += changeSpawnCountTheSameTime;
         }
-        
     }
 
 
