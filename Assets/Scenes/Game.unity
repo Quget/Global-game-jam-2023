@@ -270,7 +270,7 @@ MonoBehaviour:
   changeToDropReductionPerPickUp: 2.5
   changeSpawnCountTheSameTime: 1
   rootBoss: {fileID: 55041651}
-  bossSpeedIncreasePerTick: 2
+  bossSpeedIncreasePerTick: 3
   enemyStartHealth: 30
   enemyHealthIncreasePerTick: 2
 --- !u!1 &73917392
@@ -629,6 +629,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1665666730905024246, guid: e659234138341b74396b7acf3f26f33a, type: 3}
       propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190999517053777254, guid: e659234138341b74396b7acf3f26f33a, type: 3}
+      propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4648770054267066727, guid: e659234138341b74396b7acf3f26f33a, type: 3}

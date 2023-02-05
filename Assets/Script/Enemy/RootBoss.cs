@@ -125,6 +125,9 @@ public class RootBoss : MonoBehaviour
         {
             ScreenShake.Instance.ShakeScreen();
             currentHealth -= projectile.Damage;
+
+            Vector2 force = collision.contacts[0].normal * 50;
+            rigidbody2D.AddForceAtPosition(-force, transform.position, ForceMode2D.Impulse);
             if (currentHealth <= 0)
             {
                 animator.SetTrigger("despawn");

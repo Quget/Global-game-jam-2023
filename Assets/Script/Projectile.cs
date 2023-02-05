@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private new Rigidbody2D rigidbody2D = null;
 
+    public Rigidbody2D Rigidbody2D => rigidbody2D;
+
     [SerializeField]
     private AudioClip bulletSound = null;
 

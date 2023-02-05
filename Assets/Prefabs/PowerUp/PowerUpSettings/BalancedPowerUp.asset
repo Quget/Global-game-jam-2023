@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats:
     maxHealth: 5
-    movementSpeed: 10
+    movementSpeed: 0
     gunSpread: 5
     projectileSpeed: 0
     damage: 2
@@ -23,6 +23,7 @@ MonoBehaviour:
     bulletCount: 1
     maxBulletRange: 0
     bulletBounceCount: 1
+    bulletPenitration: 0
   itemSprite: {fileID: 21300000, guid: 77c4517e18df7a149b5089922e84c3b5, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   name: Balance
