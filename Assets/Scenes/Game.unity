@@ -261,8 +261,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 69f63bcb517883a4e8ecc036bdfe1036, type: 2}
   powerUpPickablePrefab: {fileID: 5194515471257045783, guid: 53cb8fcf9d175e24b816d39476a705ec, type: 3}
   changeToDropOnKill: 25
-  minMaxSpawnTimeRandom: {x: 4, y: 4}
-  startSpread: 4
+  minMaxSpawnTimeRandom: {x: 5, y: 5}
+  startSpread: 5
   maxEnemyCount: 15
   spawnCountTheSameTime: 1
   difficultyTick: 10
@@ -270,7 +270,7 @@ MonoBehaviour:
   changeToDropReductionPerPickUp: 2.5
   changeSpawnCountTheSameTime: 1
   rootBoss: {fileID: 55041651}
-  bossSpeedIncreasePerTick: 6
+  bossSpeedIncreasePerTick: 5
   enemyStartHealth: 30
   enemyHealthIncreasePerTick: 2
 --- !u!1 &73917392
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 73917394}
-  defaultVolume: 0.1
+  defaultVolume: 0.2
 --- !u!1001 &1045100055975779278
 PrefabInstance:
   m_ObjectHideFlags: 0

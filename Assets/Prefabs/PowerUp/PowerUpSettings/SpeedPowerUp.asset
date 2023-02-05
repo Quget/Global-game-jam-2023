@@ -16,10 +16,10 @@ MonoBehaviour:
     maxHealth: 0
     movementSpeed: 0
     gunSpread: 0
-    projectileSpeed: 5
+    projectileSpeed: 2.5
     damage: 0
     damageOverTime: 0
-    timeBetweenShotsMilis: 200
+    timeBetweenShotsMilis: 100
     bulletCount: 0
     maxBulletRange: 0
     bulletBounceCount: 0
