@@ -6,12 +6,6 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    private Sprite frontSprite = null;
-
-    [SerializeField]
-    private Sprite backSprite = null;
-
-    [SerializeField]
     private new Rigidbody2D  rigidbody2D = null;
     public Rigidbody2D Rigidbody2D => rigidbody2D;
 
@@ -26,9 +20,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Weapon weapon;
-
-    [SerializeField]
-    private SpriteRenderer spriteRenderer = null;
 
     [SerializeField]
     private new Collider2D collider2D;
@@ -115,15 +106,15 @@ public class Player : MonoBehaviour
             
             if (thisScreenPoint.y < 0)
             {
-                SetFront();
+                WalkForward();
             }
             else
             {
-                SetBack();
+                Walkbackward();
 
             }
             int flipScale = thisScreenPoint.x > 0 ? 1 : -1;
-            //spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+            skeletonMecanim.transform.localScale = new Vector3(flipScale, 1, 1);
             
         }
         else
@@ -131,19 +122,19 @@ public class Player : MonoBehaviour
 
             if (thisScreenPoint.x > 0)
             {
-                SetFront();
+                WalkForward();
             }
             else
             {
-                SetBack();
+                Walkbackward();
             }
             int flipScale = thisScreenPoint.y > 0 ? 1 : -1;
-            //spriteRenderer.transform.localScale = new Vector3(flipScale, 1, 1);
+            skeletonMecanim.transform.localScale = new Vector3(flipScale, 1, 1);
         }
 
     }
 
-    private void SetFront()
+    private void WalkForward()
     {
         if (!animator.GetBool("WalkForward"))
         {
@@ -153,7 +144,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void SetBack()
+    private void Walkbackward()
     {
         if (!animator.GetBool("WalkBackward"))
         {
@@ -167,10 +158,27 @@ public class Player : MonoBehaviour
     {
         Vector2 input = new Vector2(Input.GetAxis("HorizontalRight"), Input.GetAxis("VerticalRight"));
         Vector3 aimVector = input;
+        //
         if (input == Vector2.zero)
         {
             aimVector = Camera.main.WorldToScreenPoint(aimTransform.position);
             aimVector = Input.mousePosition - aimVector;
+
+            //0 = Up, 1 =down
+            //0.5 = sideview
+
+            float animationRotation = aimVector.normalized.x * 0.5f;// - 0.5f;
+            if (skeletonMecanim.transform.localScale.x == -1)
+            {
+                animationRotation = Mathf.Abs(animationRotation);
+            }
+
+            if (aimVector.normalized.y < 0)
+            {
+                animationRotation = 1f - animationRotation;
+            }
+            animationRotation = Mathf.Abs(animationRotation);
+            animator.SetFloat("AimDirection", animationRotation);
             gunPoint.transform.localPosition = new Vector3(0, 1, 0);
         }
         else
@@ -179,6 +187,13 @@ public class Player : MonoBehaviour
         }
 
         float angle = Mathf.Atan2(aimVector.y, aimVector.x) * Mathf.Rad2Deg;
+
+        float normalizedAngle = Mathf.Abs(angle) / 180f;
+        Debug.Log(angle + ":" + normalizedAngle);
+        if (input != Vector2.zero)
+        {
+            animator.SetFloat("AimDirection", 1 - normalizedAngle);
+        }
         aimTransform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
     }
@@ -212,9 +227,10 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            spriteRenderer.color = Color.clear;
+            //spriteRenderer.color = Color.clear;
+            skeletonMecanim.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.15f);
-            spriteRenderer.color = Color.white;
+            skeletonMecanim.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.15f);
         }
         flickerCoroutine = null;
