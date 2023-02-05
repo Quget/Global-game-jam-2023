@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -53,6 +54,12 @@ public class Player : MonoBehaviour
     }
     private Coroutine flickerCoroutine = null;
 
+    private Action onDeath = null;
+
+    public void SetUp(Action onDeath)
+    {
+        this.onDeath = onDeath;
+    }
 
     private void Awake()
     {
@@ -242,6 +249,7 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(playerHurt, transform.position);
         if (currentHealth <= 0)
         {
+            onDeath?.Invoke();
             Destroy(this.gameObject);
         }
         else
@@ -290,6 +298,16 @@ public class Player : MonoBehaviour
         playerStats.damageOverTime += powerUpPickable.PowerUpSetting.PowerUp.damageOverTime;
         playerStats.maxBulletRange += powerUpPickable.PowerUpSetting.PowerUp.maxBulletRange;
         playerStats.bulletPenitration += powerUpPickable.PowerUpSetting.PowerUp.bulletPenitration;
+
+        if (playerStats.bulletCount < 1)
+            playerStats.bulletCount = 1;
+
+        if (playerStats.gunSpread < 0)
+            playerStats.gunSpread = 0;
+
+        if (playerStats.timeBetweenShotsMilis < 0)
+            playerStats.timeBetweenShotsMilis = 1;
+
 
         if (playerStats.damage < 1)
             playerStats.damage = 1;

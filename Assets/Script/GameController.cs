@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -70,6 +72,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private float enemyHealthIncreasePerTick = 5;
 
+    private DateTime startDate = DateTime.Now;
+
     private void Awake()
     {
         cameraThatFollowsATransform.SetUp();
@@ -78,6 +82,10 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
 
         FindObjectOfType<MapController>().SetUp(player.transform);
+
+        player.SetUp(()=> {
+            gui.ShowGameOver("Ohh no you died. Root of all evil won!");
+        });
 
     }
 
@@ -103,6 +111,9 @@ public class GameController : MonoBehaviour
             {
                 rootEnemies[i].Kill(true);
             }
+            TimeSpan timeSpan = DateTime.Now - startDate;
+            gui.ShowGameOver("You did it! You murdered the root of all evil!", (float)timeSpan.TotalSeconds);
+
         });
 
         for (int i = 0; i < 2; i++)
@@ -120,6 +131,8 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         StartCoroutine(StartSpawnLoop());
         StartCoroutine(DifficultyTick());
+
+        startDate = DateTime.Now;
     }
 
     private IEnumerator StartSpawnLoop()

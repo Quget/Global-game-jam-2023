@@ -102,7 +102,8 @@ public class RootBoss : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        if (transformToFollow == null)
+            return;
         Vector3 direction = transform.position - transformToFollow.position;
         direction = (direction.normalized * speed) * Time.fixedDeltaTime;
         rigidbody2D.AddForce(-direction * rigidbody2D.drag, ForceMode2D.Impulse);
