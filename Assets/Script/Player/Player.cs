@@ -271,6 +271,7 @@ public class Player : MonoBehaviour
             skeletonMecanim.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.15f);
         }
+        skeletonMecanim.gameObject.SetActive(true);
         flickerCoroutine = null;
     }
 

@@ -15,12 +15,12 @@ MonoBehaviour:
   playerStats:
     maxHealth: 0
     movementSpeed: 0
-    gunSpread: -5
+    gunSpread: -10
     projectileSpeed: 0
-    damage: 5
+    damage: 25
     damageOverTime: 0
     timeBetweenShotsMilis: 0
-    bulletCount: -1
+    bulletCount: -2
     maxBulletRange: 0
     bulletBounceCount: 0
     bulletPenitration: 0
