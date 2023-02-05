@@ -67,6 +67,9 @@ public class CameraThatFollowsATransform : MonoBehaviour
 
     private void SmoothDampFollow()
     {
+        if (transformToFollow == null)
+            return;
+
         Vector3 point = Camera.main.WorldToViewportPoint(transformToFollow.position);
         Vector3 delta = transformToFollow.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
         Vector3 destination = transform.position + delta;

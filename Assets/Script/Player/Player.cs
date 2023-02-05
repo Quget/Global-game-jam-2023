@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SkeletonMecanim skeletonMecanim = null;
 
+
     public bool CanMove = false;
 
 
@@ -55,10 +56,12 @@ public class Player : MonoBehaviour
     private Coroutine flickerCoroutine = null;
 
     private Action onDeath = null;
+    private Action onPowerUp = null;
 
-    public void SetUp(Action onDeath)
+    public void SetUp(Action onDeath, Action onPowerUp)
     {
         this.onDeath = onDeath;
+        this.onPowerUp = onPowerUp;
     }
 
     private void Awake()
@@ -311,5 +314,7 @@ public class Player : MonoBehaviour
 
         if (playerStats.damage < 1)
             playerStats.damage = 1;
+
+        onPowerUp?.Invoke();
     }
 }

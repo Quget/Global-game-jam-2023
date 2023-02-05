@@ -266,7 +266,8 @@ MonoBehaviour:
   maxEnemyCount: 15
   spawnCountTheSameTime: 1
   difficultyTick: 10
-  changeToDropReductionPerTick: 5
+  changeToDropReductionPerTick: 0
+  changeToDropReductionPerPickUp: 2.5
   changeSpawnCountTheSameTime: 1
   rootBoss: {fileID: 55041651}
   bossSpeedIncreasePerTick: 2

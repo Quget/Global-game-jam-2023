@@ -58,6 +58,9 @@ public class GameController : MonoBehaviour
     private float changeToDropReductionPerTick = 5f;
 
     [SerializeField]
+    private float changeToDropReductionPerPickUp = 2.5f;
+
+    [SerializeField]
     private int changeSpawnCountTheSameTime = 1;
 
     [SerializeField]
@@ -83,8 +86,17 @@ public class GameController : MonoBehaviour
 
         FindObjectOfType<MapController>().SetUp(player.transform);
 
-        player.SetUp(()=> {
+        player.SetUp(()=> 
+        {
+            StopAllCoroutines();
+            player.CanMove = false;
+
             gui.ShowGameOver("Ohh no you died. Root of all evil won!");
+        },
+        ()=> {
+            changeToDropOnKill -= changeToDropReductionPerPickUp;
+            if (changeToDropOnKill < 5)
+                changeToDropOnKill = 5;
         });
 
     }
@@ -168,8 +180,8 @@ public class GameController : MonoBehaviour
             }
 
             changeToDropOnKill -= changeToDropReductionPerTick;
-            //if (changeToDropOnKill < 5)
-                //changeToDropOnKill = 5;
+            if (changeToDropOnKill < 5)
+                changeToDropOnKill = 5;
 
             rootBoss.speed += bossSpeedIncreasePerTick;
             spawnCountTheSameTime += changeSpawnCountTheSameTime;
@@ -214,6 +226,8 @@ public class GameController : MonoBehaviour
 
     private void SpawnRootEnemy(int randomSpread)
     {
+        if (player == null)
+            return;
 
         Grid grid = GetGridNearPlayer();
         Vector3Int playerCell = grid.WorldToCell(player.transform.position);
