@@ -264,8 +264,8 @@ MonoBehaviour:
   changeToDropOnKill: 75
   minMaxSpawnTimeRandom: {x: 4, y: 4}
   startSpread: 4
-  maxEnemyCount: 4
-  difficultyTick: 10
+  maxEnemyCount: 0
+  difficultyTick: 9999
   changeToDropReductionPerTick: 5
   rootBoss: {fileID: 55041651}
   bossSpeedIncreasePerTick: 1
@@ -795,6 +795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5211332663013158690, guid: f34e8ecba575ea94aabbdce35f69cfdc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f34e8ecba575ea94aabbdce35f69cfdc, type: 3}
 --- !u!1001 &1261489180356405007
@@ -948,10 +952,6 @@ PrefabInstance:
     - target: {fileID: 6006826701543653762, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6006826701543653763, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}
-      propertyPath: maxClouds
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff595555fe58b024887ac2b362bda5a5, type: 3}

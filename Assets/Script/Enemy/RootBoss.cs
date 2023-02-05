@@ -20,7 +20,7 @@ public class RootBoss : MonoBehaviour
     private float damage = 15;
 
     [SerializeField]
-    private SpriteRenderer spriteRenderer = null;
+    private ParticleSystem spawnParticle = null;
 
     [SerializeField]
     private Animator animator = null;
@@ -70,15 +70,11 @@ public class RootBoss : MonoBehaviour
 
     private IEnumerator EnableHitPlayer()
     {
-        Color start = spriteRenderer.color;
-        spriteRenderer.color = Color.clear;
-        while (spriteRenderer.color != start)
-        {
-            spriteRenderer.color = Color.Lerp(spriteRenderer.color, start, timeToShootOut * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        spriteRenderer.color = start;
-        spriteRenderer.gameObject.SetActive(false);
+        spawnParticle.Play();
+        yield return new WaitForSeconds(spawnParticle.main.duration);
+        spawnParticle?.Stop();
+        spawnParticle.gameObject.SetActive(false);
+
         skeletonMecanim.gameObject.SetActive(true);
         animator.SetTrigger("spawn");
         AudioSource.PlayClipAtPoint(spawnInClip, transform.position);
