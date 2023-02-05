@@ -34,9 +34,6 @@ public class Projectile : MonoBehaviour
         this.maxRange = maxRange;
         this.maxBouncyCount = maxBouncyCount;
         this.maxPenitrationCount = maxPenitrationCount;
-
-        if (maxPenitrationCount > 0)
-            rigidbody2D.sharedMaterial.bounciness = 0;
     }
 
 
