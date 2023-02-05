@@ -5,10 +5,18 @@ using UnityEngine;
 public class GUI : MonoBehaviour
 {
     [SerializeField]
-    private Healthbar healthbar = null;
+    private Healthbar playerHealthBar = null;
 
-    public void UpdateHealth(float percentage)
+    [SerializeField]
+    private Healthbar bossHealthBar = null;
+
+    public void UpdateBossHealth(float percentage)
     {
-        healthbar.UpdateHealth(percentage);
+        bossHealthBar.UpdateHealth(percentage);
+    }
+
+    public void UpdatePlayerHealth(float percentage)
+    {
+        playerHealthBar.UpdateHealth(percentage);
     }
 }

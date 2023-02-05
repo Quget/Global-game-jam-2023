@@ -7,7 +7,7 @@ using UnityEngine;
 public class RootEnemy : MonoBehaviour
 {
     [SerializeField]
-    private float health = 100;
+    private float health = 10;
 
     [SerializeField]
     private float timeToShootOut = 5;
@@ -51,7 +51,7 @@ public class RootEnemy : MonoBehaviour
 
     private bool canCheckDelete = false;
 
-    public void SetUp(Collider2D playerCollider, Action<RootEnemy, bool> OnDestroyed)
+    public void SetUp(Collider2D playerCollider, float health,Action<RootEnemy,bool> OnDestroyed)
     {
         this.playerCollider = playerCollider;
 
@@ -60,6 +60,7 @@ public class RootEnemy : MonoBehaviour
         if(playerCollider != null)
             Physics2D.IgnoreCollision(this.collider2D, playerCollider, true);
 
+        this.health = health;
         StartCoroutine(EnableHitPlayer());
         skeletonMecanim.gameObject.SetActive(false);
         this.OnDestroyed = OnDestroyed;

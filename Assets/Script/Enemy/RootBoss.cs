@@ -8,7 +8,17 @@ using UnityEngine;
 public class RootBoss : MonoBehaviour
 {
     [SerializeField]
-    private float health = 100;
+    private float maxHealth = 100;
+
+    private float currentHealth = 100;
+    public float HealthPercentage
+    {
+        get
+        {
+            float onePercent = maxHealth / 100;
+            return currentHealth / onePercent;
+        }
+    }
 
     [SerializeField]
     private float timeToShootOut = 5;
@@ -48,13 +58,13 @@ public class RootBoss : MonoBehaviour
 
     private Action<RootBoss, bool> OnDestroyed = null;
 
-
     private bool canCheckDelete = false;
 
     private Transform transformToFollow = null;
 
     public void SetUp(Collider2D playerCollider, Transform transformToFollow, Action<RootBoss, bool> OnDestroyed)
     {
+        currentHealth = maxHealth;
         this.transformToFollow = transformToFollow;
         this.playerCollider = playerCollider;
 
@@ -66,6 +76,7 @@ public class RootBoss : MonoBehaviour
         StartCoroutine(EnableHitPlayer());
         skeletonMecanim.gameObject.SetActive(false);
         this.OnDestroyed = OnDestroyed;
+       
     }
 
     private IEnumerator EnableHitPlayer()
@@ -112,8 +123,8 @@ public class RootBoss : MonoBehaviour
         if (projectile != null)
         {
             ScreenShake.Instance.ShakeScreen();
-            health -= projectile.Damage;
-            if (health <= 0)
+            currentHealth -= projectile.Damage;
+            if (currentHealth <= 0)
             {
                 animator.SetTrigger("despawn");
                 this.collider2D.enabled = false;

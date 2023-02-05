@@ -64,6 +64,12 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private float bossSpeedIncreasePerTick = 1;
 
+    [SerializeField]
+    private float enemyStartHealth = 10;
+
+    [SerializeField]
+    private float enemyHealthIncreasePerTick = 5;
+
     private void Awake()
     {
         cameraThatFollowsATransform.SetUp();
@@ -154,13 +160,16 @@ public class GameController : MonoBehaviour
 
             rootBoss.speed += bossSpeedIncreasePerTick;
             spawnCountTheSameTime += changeSpawnCountTheSameTime;
+            enemyStartHealth += enemyHealthIncreasePerTick;
         }
     }
 
 
     private void Update()
     {
-        gui.UpdateHealth(player.HealthPercentage);
+        gui.UpdatePlayerHealth(player.HealthPercentage);
+
+        gui.UpdateBossHealth(rootBoss.HealthPercentage);
         if (Input.GetButtonDown("Submit"))
         {
             SceneManager.LoadScene(0);
@@ -236,7 +245,7 @@ public class GameController : MonoBehaviour
         RootEnemy rootEnemy = GameObject.Instantiate(rootEnemyPrefab);
         enemySpawnPos.z = 0;
         rootEnemy.transform.position = enemySpawnPos;
-        rootEnemy.SetUp(player.Collider2D,(thisEnemy, killed)=> 
+        rootEnemy.SetUp(player.Collider2D, enemyStartHealth,(thisEnemy, killed)=> 
         {
             if (killed)
             {

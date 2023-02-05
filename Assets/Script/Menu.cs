@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
 
     private void Awake()
     {
-        rootEnemy.SetUp(null, null);
+        rootEnemy.SetUp(null, 9001,null);
     }
     private void Update()
     {

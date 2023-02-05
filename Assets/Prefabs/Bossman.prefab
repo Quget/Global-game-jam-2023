@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c512b10348d1ada4993fee05722fe260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3500
+  maxHealth: 9001
   timeToShootOut: 5
   collider2D: {fileID: 1761745791575926794}
   damage: 15

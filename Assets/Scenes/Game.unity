@@ -257,7 +257,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ab19d8dfd49ac94886184a8a4bad299, type: 2}
   - {fileID: 11400000, guid: 9f33e502fdb7b6346ab0e5f08508efe1, type: 2}
   - {fileID: 11400000, guid: adec7d450268be643842f3c4f082a90c, type: 2}
-  - {fileID: 11400000, guid: b193c2a7b7e73e147966c0e542a99410, type: 2}
   - {fileID: 11400000, guid: 50537b32627301d429e579629847c1b9, type: 2}
   - {fileID: 11400000, guid: 69f63bcb517883a4e8ecc036bdfe1036, type: 2}
   powerUpPickablePrefab: {fileID: 5194515471257045783, guid: 53cb8fcf9d175e24b816d39476a705ec, type: 3}
@@ -270,7 +269,9 @@ MonoBehaviour:
   changeToDropReductionPerTick: 5
   changeSpawnCountTheSameTime: 1
   rootBoss: {fileID: 55041651}
-  bossSpeedIncreasePerTick: 1
+  bossSpeedIncreasePerTick: 5
+  enemyStartHealth: 30
+  enemyHealthIncreasePerTick: 2
 --- !u!1 &73917392
 GameObject:
   m_ObjectHideFlags: 0
