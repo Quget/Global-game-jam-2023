@@ -96,7 +96,6 @@ public class Player : MonoBehaviour
 
     private void FlipCheck()
     {
-
         Vector2 input = new Vector2(Input.GetAxis("HorizontalRight"), Input.GetAxis("VerticalRight"));
         Vector3 thisScreenPoint = input;
         if (input == Vector2.zero)
@@ -119,7 +118,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-
             if (thisScreenPoint.x > 0)
             {
                 WalkForward();
@@ -185,11 +183,9 @@ public class Player : MonoBehaviour
         {
             gunPoint.transform.localPosition = new Vector3(1, 0, 0);
         }
-
         float angle = Mathf.Atan2(aimVector.y, aimVector.x) * Mathf.Rad2Deg;
 
         float normalizedAngle = Mathf.Abs(angle) / 180f;
-        Debug.Log(angle + ":" + normalizedAngle);
         if (input != Vector2.zero)
         {
             animator.SetFloat("AimDirection", 1 - normalizedAngle);

@@ -66,13 +66,13 @@ MonoBehaviour:
   - {fileID: 390853137634617871}
   cloudyMovementPrefab: {fileID: 4551444033629770387, guid: b5673282b76dfb646a9c321195cff9fe, type: 3}
   cloudSprites:
-  - {fileID: 21300000, guid: 3d4ee78e2828aa34cb6ca48638e18ada, type: 3}
-  - {fileID: 21300000, guid: d25bbbb27bb6e3f4e9c622e86ea15dc4, type: 3}
-  - {fileID: 21300000, guid: 99f012b4ed9680743aa012277c9ad3ef, type: 3}
-  - {fileID: 21300000, guid: 5c5d5c234a98afb4fb997b2d81a58b16, type: 3}
-  - {fileID: 21300000, guid: 132e0534f5cca9f4d9178b98155823b6, type: 3}
-  - {fileID: 21300000, guid: d0ec16299b3fcbe48aee93297bc07922, type: 3}
-  maxClouds: 20
+  - {fileID: 21300000, guid: 5b255a13d3beb28448d2acc6c4e3f81d, type: 3}
+  - {fileID: 21300000, guid: 676dfff1f35e2974183d3dcf17a7301a, type: 3}
+  - {fileID: 21300000, guid: b2dac85c7cd68bb4387d123994b56bd0, type: 3}
+  - {fileID: 21300000, guid: 076eaebbdd36a4043903887f618f2d90, type: 3}
+  - {fileID: 21300000, guid: 01541173bcba2a54f894132266509259, type: 3}
+  - {fileID: 21300000, guid: ee19ac319e9af714babe4d20252d2b5b, type: 3}
+  maxClouds: 6
 --- !u!1 &8735974813256461851
 GameObject:
   m_ObjectHideFlags: 0
