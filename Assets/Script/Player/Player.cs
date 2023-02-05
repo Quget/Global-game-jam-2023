@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
             if (fireTrigger > 0)
                 timeBetweenshot *= 1 + (1-fireTrigger);
 
-            weapon.Shoot(-direction, gunPoint.position, playerStats.bulletCount, playerStats.gunSpread, playerStats.projectileSpeed, playerStats.damage, playerStats.damageOverTime, timeBetweenshot, playerStats.maxBulletRange, playerStats.bulletBounceCount);
+            weapon.Shoot(-direction, gunPoint.position, playerStats.bulletCount, playerStats.gunSpread, playerStats.projectileSpeed, playerStats.damage, playerStats.damageOverTime, timeBetweenshot, playerStats.maxBulletRange, playerStats.bulletBounceCount,playerStats.bulletPenitration);
         }
     }
 
@@ -103,33 +103,24 @@ public class Player : MonoBehaviour
             thisScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
             thisScreenPoint = Input.mousePosition - thisScreenPoint;
             
-            if (thisScreenPoint.y < 0)
-            {
-                WalkForward();
-            }
-            else
-            {
-                Walkbackward();
-
-            }
             int flipScale = thisScreenPoint.x > 0 ? 1 : -1;
             skeletonMecanim.transform.localScale = new Vector3(flipScale, 1, 1);
             
         }
         else
         {
-            if (thisScreenPoint.x > 0)
-            {
-                WalkForward();
-            }
-            else
-            {
-                Walkbackward();
-            }
             int flipScale = thisScreenPoint.y > 0 ? 1 : -1;
             skeletonMecanim.transform.localScale = new Vector3(flipScale, 1, 1);
         }
 
+    }
+
+    private void Idle()
+    {
+        if (!animator.GetBool("Idle"))
+        {
+            animator.SetTrigger("Idle");
+        }
     }
 
     private void WalkForward()
@@ -137,7 +128,6 @@ public class Player : MonoBehaviour
         if (!animator.GetBool("WalkForward"))
         {
             animator.SetTrigger("WalkForward");
-            Debug.Log("Forward!");
         }
 
     }
@@ -147,9 +137,7 @@ public class Player : MonoBehaviour
         if (!animator.GetBool("WalkBackward"))
         {
             animator.SetTrigger("WalkBackward");
-            Debug.Log("Backward!");
         }
-            
     }
 
     private void Aim()
@@ -184,15 +172,58 @@ public class Player : MonoBehaviour
             gunPoint.transform.localPosition = new Vector3(1, 0, 0);
         }
         float angle = Mathf.Atan2(aimVector.y, aimVector.x) * Mathf.Rad2Deg;
-
         float normalizedAngle = Mathf.Abs(angle) / 180f;
         if (input != Vector2.zero)
         {
             animator.SetFloat("AimDirection", 1 - normalizedAngle);
         }
+
+
+        AnimationStuff();
         aimTransform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
     }
+
+    private void AnimationStuff()
+    {
+        Vector3 heading = gunPoint.position - (transform.position + (new Vector3(rigidbody2D.velocity.normalized.x, rigidbody2D.velocity.normalized.y, 0) * 5 ));
+        float totalHeading = heading.x + heading.y;
+        totalHeading = Mathf.Abs(totalHeading);
+
+        
+        if (Mathf.Approximately(rigidbody2D.velocity.magnitude, 0))
+        {
+            Idle();
+        }
+        else
+        {
+            //mmmm
+            if (totalHeading >= 5.8f)
+            {
+                Walkbackward();
+            }
+            else
+            {
+                WalkForward();
+            }
+        }
+        /*
+        if (rigidbody2D.velocity.normalized.x < 0 || rigidbody2D.velocity.normalized.y < 0)
+        {
+            Walkbackward();
+        }
+        else if (rigidbody2D.velocity.normalized.x > 0 || rigidbody2D.velocity.normalized.y > 0)
+        {
+
+            WalkForward();
+        }
+        else
+        {
+            Idle();
+        }
+        */
+    }
+
     private void Movement()
     {
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -258,6 +289,7 @@ public class Player : MonoBehaviour
         playerStats.projectileSpeed += powerUpPickable.PowerUpSetting.PowerUp.projectileSpeed;
         playerStats.damageOverTime += powerUpPickable.PowerUpSetting.PowerUp.damageOverTime;
         playerStats.maxBulletRange += powerUpPickable.PowerUpSetting.PowerUp.maxBulletRange;
+        playerStats.bulletPenitration += powerUpPickable.PowerUpSetting.PowerUp.bulletPenitration;
 
         if (playerStats.damage < 1)
             playerStats.damage = 1;

@@ -21,15 +21,22 @@ public class Projectile : MonoBehaviour
 
     private int bounced = 0;
 
+    private int maxPenitrationCount = 0;
+    private int penitrated = 0;
+
     private Vector3 startPosition = Vector3.zero;
 
-    public void SetUp(float damage, float damageOverTime, float projectileSpeed, float maxRange, int maxBouncyCount)
+    public void SetUp(float damage, float damageOverTime, float projectileSpeed, float maxRange, int maxBouncyCount, int maxPenitrationCount)
     {
         this.damage = damage;
         this.damageOverTime = damageOverTime;
         this.projectileSpeed = projectileSpeed;
         this.maxRange = maxRange;
         this.maxBouncyCount = maxBouncyCount;
+        this.maxPenitrationCount = maxPenitrationCount;
+
+        if (maxPenitrationCount > 0)
+            rigidbody2D.sharedMaterial.bounciness = 0;
     }
 
 
@@ -61,11 +68,17 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        bounced++;
         transform.rotation = Quaternion.LookRotation(Vector3.forward, rigidbody2D.velocity * 2);
-        if (bounced > maxBouncyCount)
-            Clear();
+        penitrated++;
+        if (penitrated > maxPenitrationCount)
+        {
+            rigidbody2D.sharedMaterial.bounciness = 1;
+            bounced++;
+            if (bounced > maxBouncyCount)
+                Clear();
+        }
     }
+
 
     private void Clear()
     {

@@ -264,7 +264,7 @@ MonoBehaviour:
   changeToDropOnKill: 75
   minMaxSpawnTimeRandom: {x: 4, y: 4}
   startSpread: 4
-  maxEnemyCount: 0
+  maxEnemyCount: 7
   difficultyTick: 9999
   changeToDropReductionPerTick: 5
   rootBoss: {fileID: 55041651}

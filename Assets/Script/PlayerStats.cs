@@ -15,6 +15,7 @@ public class PlayerStats
     public int bulletCount = 0;
     public float maxBulletRange = 0;
     public int bulletBounceCount = 0;
+    public int bulletPenitration = 0;
     // int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis)
 }
 

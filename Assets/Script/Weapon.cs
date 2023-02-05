@@ -12,33 +12,33 @@ public class Weapon : MonoBehaviour
 
     private bool canShoot = true;
 
-    public void Shoot(Vector3 direction, Vector3 positionToSpawn, int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis,float maxRange,int maxBouncyCount)
+    public void Shoot(Vector3 direction, Vector3 positionToSpawn, int count, float spread, float speed, float damage, float damageOverTimer, float timeBetweenShotsMilis,float maxRange,int maxBouncyCount, int maxPenitrationCount)
     {
         if (canShoot)
         {
             canShoot = false;
             this.timeBetweenShotsMilis = timeBetweenShotsMilis;
-            UberShot(direction, positionToSpawn, count, spread,speed,damage,damageOverTimer,maxRange, maxBouncyCount);
+            UberShot(direction, positionToSpawn, count, spread,speed,damage,damageOverTimer,maxRange, maxBouncyCount,maxPenitrationCount);
             StartCoroutine(ShootTimer());
         }
     }
 
-    private void SingleShot(Vector3 direction, Vector3 positionToSpawn, float speed, float damage, float damageOverTimer, float maxRange, int maxBouncyCount)
+    private void SingleShot(Vector3 direction, Vector3 positionToSpawn, float speed, float damage, float damageOverTimer, float maxRange, int maxBouncyCount, int maxPenitrationCount)
     {
         Projectile shotProjectile = GameObject.Instantiate(projectile);
-        shotProjectile.SetUp(damage, damageOverTimer, speed, maxRange,maxBouncyCount);
+        shotProjectile.SetUp(damage, damageOverTimer, speed, maxRange,maxBouncyCount, maxPenitrationCount);
         shotProjectile.Shoot(direction, positionToSpawn);
     }
 
     //ToDo
-    private void UberShot(Vector3 direction, Vector3 positionToSpawn, int count, float spread,float speed, float damage, float damageOverTimer, float maxRange, int maxBouncyCount)
+    private void UberShot(Vector3 direction, Vector3 positionToSpawn, int count, float spread,float speed, float damage, float damageOverTimer, float maxRange, int maxBouncyCount, int maxPenitrationCount)
     {
         spread = spread * 0.5f;
         for (int i = 0; i < count; i++)
         {
             Quaternion angle =  Quaternion.Euler(0, 0, Random.Range(-spread, spread));
             Vector3 newDirection = angle * direction;
-            SingleShot(newDirection, positionToSpawn,speed,damage,damageOverTimer,maxRange,maxBouncyCount);
+            SingleShot(newDirection, positionToSpawn,speed,damage,damageOverTimer,maxRange,maxBouncyCount,maxPenitrationCount);
         }
     }
 

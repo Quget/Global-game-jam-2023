@@ -232,8 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b13f7e88efded4c86179de783e096a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontSprite: {fileID: 21300000, guid: f4fb031ea027759478a7795b699a807a, type: 3}
-  backSprite: {fileID: 21300000, guid: eeaf98193a474404283de833acfc0008, type: 3}
   rigidbody2D: {fileID: 1045100055877520428}
   playerStats:
     maxHealth: 100
@@ -246,10 +244,10 @@ MonoBehaviour:
     bulletCount: 1
     maxBulletRange: 10
     bulletBounceCount: 0
+    bulletPenitration: 1
   aimTransform: {fileID: 1045100056278161809}
   gunPoint: {fileID: 1045100056957959792}
   weapon: {fileID: 1045100055269929607}
-  spriteRenderer: {fileID: 1045100056797669069}
   collider2D: {fileID: 1045100055877520429}
   playerHurt: {fileID: 8300000, guid: 50f39115d5668454eb2809b214ffc13e, type: 3}
   powerUp: {fileID: 8300000, guid: a1e6846e19ac0dc44944ba0e09503235, type: 3}
