@@ -8,6 +8,9 @@ Collect power ups and destroy the root of all evil!
 Joysticks(controller) and WSAD/Mouse to walk and aim.
 Right trigger and left mouse button to shoot.
 
+Play the game here
+https://quget.com/media/games/RootOfAllEvil/index.html
+
 Credits
 - Rose Meivogel (Programmer)
 - Runa Elzinga (Artist)
